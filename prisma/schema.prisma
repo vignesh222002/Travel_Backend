@@ -40,7 +40,7 @@ model Spots {
   season          String
   google_location String?
   must_visit      Boolean @default(false)
-  place_ref       Places  @relation(fields: [place_id], references: [id])
+  place_ref       Places  @relation(fields: [place_id], references: [id], onDelete: Cascade)
 }
 
 model Nearest_place {

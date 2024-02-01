@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { createPlaceHandler, getAllPlacesHandler, updatePlaceHandler } from "./place.controllers";
+import { createPlaceHandler, getAllPlacesHandler, getPlaceByIdHandler, updatePlaceHandler } from "./place.controllers";
 import { UpdatePlaceSchema, createPlaceSchema, getPlaceByIdSchema } from "./place.schema";
 
 async function placeRoutes(server: FastifyInstance) {
@@ -13,7 +13,7 @@ async function placeRoutes(server: FastifyInstance) {
         {
             schema: getPlaceByIdSchema
         },
-        () => {}
+        getPlaceByIdHandler
     )
 
     server.post(

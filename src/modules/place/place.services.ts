@@ -13,6 +13,17 @@ export async function getAllPlaces() {
     })
 }
 
+export async function getPlaceById(id: number) {
+    return await prisma.places.findUnique({
+        where: {
+            id
+        },
+        include: {
+            spots: true
+        }
+    })
+}
+
 export async function createPlace(data: Prisma.PlacesCreateManyInput & Prisma.Nearest_placeCreateManyInput) {
 
     return prisma.places.create({

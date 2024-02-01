@@ -1,9 +1,5 @@
 // Interface
 
-export interface ICreateState {
-    state: string
-}
-
 export interface IUpdateState {
     id: number,
     state: string

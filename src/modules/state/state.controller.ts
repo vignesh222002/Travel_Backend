@@ -1,6 +1,7 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { ICreateState, IUpdateState } from "./state.schema";
+import { IUpdateState } from "./state.schema";
 import { createState, getAllStates, updateState } from "./state.services";
+import { Prisma } from "@prisma/client";
 
 export async function getAllStatesHandler(
     request: FastifyRequest,
@@ -22,7 +23,7 @@ export async function getAllStatesHandler(
 
 export async function createStateHandler(
     request: FastifyRequest<{
-        Body: ICreateState
+        Body: Prisma.StatesCreateManyInput
     }>,
     reply: FastifyReply
 ) {

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createPlace, getAllPlaces, updatePlace } from "./place.services";
+import { createPlace, getAllPlaces, getPlaceById, updatePlace } from "./place.services";
 import { Prisma } from "@prisma/client";
 
 export async function getAllPlacesHandler(
@@ -27,7 +27,17 @@ export async function getPlaceByIdHandler(
     }>,
     reply: FastifyReply
 ) {
-    try {}
+    try {
+        const id = request.params.id
+
+        const result = await getPlaceById(id)
+
+        return reply.code(200)
+            .send({
+                status: true,
+                data: result
+            })
+    }
     catch (error: any) {
         console.log("Get Place By Id Error", error);
         reply.code(500).send(error.message);
@@ -45,11 +55,12 @@ export async function createPlaceHandler(
 
         const result = await createPlace(body)
 
-        return reply.code(201).send({
-            status: true,
-            message: "Place Created Sucessfully",
-            data: result
-        })
+        return reply.code(201)
+            .send({
+                status: true,
+                message: "Place Created Sucessfully",
+                data: result
+            })
     }
     catch (error: any) {
         console.log("Create Place Error", error);

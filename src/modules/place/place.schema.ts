@@ -1,5 +1,3 @@
-// Schema
-
 export const getPlaceByIdSchema = {
     params: {
         type: 'object',
