@@ -1,14 +1,21 @@
 import Fastify from "fastify";
 import { config } from "dotenv";
+import stateRoutes from "./src/modules/state/state.routes";
+import placeRoutes from "./src/modules/place/place.routes";
 
 config();
 
-const PORT = 4000
+const server = Fastify({
+    logger: true
+});
 
-const server = Fastify();
+// Routes
+
+server.register(stateRoutes, { prefix: 'api/state' })
+server.register(placeRoutes, { prefix: 'api/place' })
 
 try {
-    server.listen({ port: PORT }, (error, address) => {
+    server.listen({ port: +(process.env.PORT || 4000) }, (error, address) => {
         if (error) {
             console.log("Error", error)
         }

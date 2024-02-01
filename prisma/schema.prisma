@@ -25,29 +25,27 @@ model Places {
   is_oneday_trip     Boolean         @default(false)
   stay_option        String?
   best_time_to_visit String?
-  state              States          @relation(fields: [state_id], references: [id])
   spots              Spots[]
-  place_id           Nearest_place?  @relation("place_id")
-  nearest_place_id   Nearest_place[]
+  nearest_place_ref  Nearest_place?  @relation("place_id")
+  state              States          @relation(fields: [state_id], references: [id])
 }
 
 model Spots {
-  id       Int    @id @default(autoincrement())
-  spot     String
-  place_id Int
-  place    Places @relation(fields: [place_id], references: [id])
-  category String
-  description String?
-  timing String
-  season String
+  id              Int     @id @default(autoincrement())
+  spot            String
+  place_id        Int
+  category        String
+  description     String?
+  timing          String
+  season          String
   google_location String?
-  must_visit Boolean @default(false)
+  must_visit      Boolean @default(false)
+  place_ref       Places  @relation(fields: [place_id], references: [id])
 }
 
 model Nearest_place {
-  id               Int    @id @default(autoincrement())
-  place_id         Int    @unique
-  nearest_place_id Int
-  place            Places @relation(fields: [place_id], references: [id], name: "place_id")
-  nearest_place    Places @relation(fields: [nearest_place_id], references: [id])
+  id                      Int    @id @default(autoincrement())
+  place_id                Int    @unique
+  nearest_place           String
+  place_id_ref            Places @relation(fields: [place_id], references: [id], name: "place_id", onDelete: Cascade)
 }
