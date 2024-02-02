@@ -1,10 +1,11 @@
 import { FastifyInstance } from "fastify";
-import { createPlaceHandler, getAllPlacesHandler, getPlaceByIdHandler, updatePlaceHandler } from "./place.controllers";
-import { UpdatePlaceSchema, createPlaceSchema, getPlaceByIdSchema } from "./place.schema";
+import { createPlaceHandler, deletePlaceHandler, getAllPlacesHandler, getPlaceByIdHandler, updatePlaceHandler } from "./place.controllers";
+import { updatePlaceSchema, createPlaceSchema, getPlaceByIdSchema, deletePlaceSchema } from "./place.schema";
 
 async function placeRoutes(server: FastifyInstance) {
     server.get(
         '/all',
+        { schema: { tags: ['Place'] } },
         getAllPlacesHandler
     )
 
@@ -27,9 +28,17 @@ async function placeRoutes(server: FastifyInstance) {
     server.put(
         '/update',
         {
-            schema: UpdatePlaceSchema
+            schema: updatePlaceSchema
         },
         updatePlaceHandler
+    )
+
+    server.delete(
+        '/delete/:id',
+        {
+            schema: deletePlaceSchema
+        },
+        deletePlaceHandler
     )
 }
 

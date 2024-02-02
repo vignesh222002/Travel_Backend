@@ -1,4 +1,5 @@
 export const getPlaceByIdSchema = {
+    tags: ['Place'],
     params: {
         type: 'object',
         properties: {
@@ -9,6 +10,7 @@ export const getPlaceByIdSchema = {
 }
 
 export const createPlaceSchema = {
+    tags: ['Place'],
     body: {
         properties: {
             place: { type: 'string' },
@@ -24,7 +26,8 @@ export const createPlaceSchema = {
     }
 }
 
-export const UpdatePlaceSchema = {
+export const updatePlaceSchema = {
+    tags: ['Place'],
     body: {
         properties: {
             id: { type: 'number' },
@@ -38,5 +41,16 @@ export const UpdatePlaceSchema = {
             nearest_place: { type: 'string' }
         },
         required: ['id', 'place', 'state_id', 'landscape', 'is_visited', 'is_oneday_trip', 'nearest_place']
+    }
+}
+
+export const deletePlaceSchema = {
+    tags: ['Place'],
+    params: {
+        type: 'object',
+        properties: {
+            id: {type: 'number'},
+        },
+        required: ['id']
     }
 }

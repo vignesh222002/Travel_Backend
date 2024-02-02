@@ -17,7 +17,10 @@ export async function getAllStatesHandler(
     }
     catch (error) {
         console.log("Get All State Error", error);
-        reply.code(500).send(error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }
 
@@ -41,7 +44,10 @@ export async function createStateHandler(
     }
     catch (error) {
         console.log("Create State Error", error);
-        reply.code(500).send(error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }
 
@@ -65,6 +71,9 @@ export async function updateStateHandler(
     }
     catch (error) {
         console.log("Update State Error", error);
-        reply.code(500).send(error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }

@@ -1,5 +1,5 @@
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createPlace, getAllPlaces, getPlaceById, updatePlace } from "./place.services";
+import { createPlace, deletePlace, getAllPlaces, getPlaceById, updatePlace } from "./place.services";
 import { Prisma } from "@prisma/client";
 
 export async function getAllPlacesHandler(
@@ -17,7 +17,10 @@ export async function getAllPlacesHandler(
     }
     catch (error: any) {
         console.log("Get All Place Error", error);
-        reply.code(500).send(error.message);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }
 
@@ -40,7 +43,10 @@ export async function getPlaceByIdHandler(
     }
     catch (error: any) {
         console.log("Get Place By Id Error", error);
-        reply.code(500).send(error.message);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }
 
@@ -64,7 +70,10 @@ export async function createPlaceHandler(
     }
     catch (error: any) {
         console.log("Create Place Error", error);
-        reply.code(500).send(error.message);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }
 
@@ -87,6 +96,35 @@ export async function updatePlaceHandler(
     }
     catch (error: any) {
         console.log("Update Place Error", error);
-        reply.code(500).send(error.message);
+        reply.code(500).send({
+            status: false,
+            error
+        });
+    }
+}
+
+export async function deletePlaceHandler(
+    request: FastifyRequest<{
+        Params: { id: number }
+    }>,
+    reply: FastifyReply
+) {
+    try {
+        const id = request.params.id;
+
+        const result = await deletePlace(id)
+
+        return reply.code(200).send({
+            status: true,
+            message: "Place Deleted Sucessfully",
+            data: result
+        })
+    }
+    catch (error: any) {
+        console.log("Delete Place Error", error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
     }
 }

@@ -5,6 +5,9 @@ import { createStateHandler, getAllStatesHandler, updateStateHandler } from "./s
 async function stateRoutes(server: FastifyInstance) {
     server.get(
         '/all',
+        {
+            schema: { tags: ['State'] }
+        },
         getAllStatesHandler
     )
 

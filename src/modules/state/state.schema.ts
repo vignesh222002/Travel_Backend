@@ -8,6 +8,7 @@ export interface IUpdateState {
 // Schema
 
 export const createStateSchema = {
+    tags: ['State'],
     body: {
         properties: {
             state: { type: 'string' }
@@ -17,6 +18,7 @@ export const createStateSchema = {
 }
 
 export const updateStateSchema = {
+    tags: ['State'],
     body: {
         properties: {
             id: { type: 'number' },

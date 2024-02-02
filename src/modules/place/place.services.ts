@@ -73,3 +73,11 @@ export async function updatePlace(data: Prisma.PlacesCreateManyInput & Prisma.Ne
         }
     })
 }
+
+export async function deletePlace(id: number) {
+    return await prisma.places.delete({
+        where: {
+            id
+        }
+    })
+}
