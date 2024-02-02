@@ -1,5 +1,6 @@
 import Fastify from "fastify";
 import { config } from "dotenv";
+import cors from '@fastify/cors'
 import stateRoutes from "./src/modules/state/state.routes";
 import placeRoutes from "./src/modules/place/place.routes";
 import fastifySwagger from "@fastify/swagger";
@@ -11,6 +12,13 @@ config();
 
 const server = Fastify({
     logger: true
+});
+
+// Cors
+
+server.register(cors, {
+    origin: "*",
+    methods: ['GET', 'PUT', 'POST', 'DELETE'],
 });
 
 // Swagger
