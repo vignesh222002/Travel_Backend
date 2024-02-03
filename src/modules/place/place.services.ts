@@ -8,6 +8,11 @@ export async function getAllPlaces() {
                 select: {
                     nearest_place: true
                 }
+            },
+            state: {
+                select:{
+                    state: true,
+                }
             }
         }
     })

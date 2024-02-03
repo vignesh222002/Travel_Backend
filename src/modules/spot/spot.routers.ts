@@ -1,5 +1,5 @@
 import { FastifyInstance } from "fastify";
-import { addSpotSchema, editSpotSchema, updateSpotSchema } from "./spot.schema";
+import { addSpotSchema, deleteSpotSchema, updateSpotSchema } from "./spot.schema";
 import { addSpotHandler, deleteSpotHandler, updateSpotHandler } from "./spot.controller";
 
 async function spotRoutes(server: FastifyInstance) {
@@ -22,7 +22,7 @@ async function spotRoutes(server: FastifyInstance) {
     server.delete(
         '/delete/:spot_id/place_id/:place_id',
         {
-            schema: editSpotSchema
+            schema: deleteSpotSchema
         },
         deleteSpotHandler
     )

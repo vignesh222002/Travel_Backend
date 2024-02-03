@@ -10,6 +10,7 @@ export const addSpotSchema = {
             season: { type: 'string' },
             google_location: { type: 'string' },
             must_visit: { type: 'boolean' },
+            image_link: { type: 'string' }
         },
         required: ['spot', 'category', 'timing', 'season', 'must_visit', 'place_id']
     }
@@ -28,12 +29,13 @@ export const updateSpotSchema = {
             season: { type: 'string' },
             google_location: { type: 'string' },
             must_visit: { type: 'boolean' },
+            image_link: { type: 'string' }
         },
         required: ['id', 'spot', 'category', 'timing', 'season', 'must_visit', 'place_id']
     }
 }
 
-export const editSpotSchema = {
+export const deleteSpotSchema = {
     tags: ['Spot'],
     params: {
         type: 'object',
