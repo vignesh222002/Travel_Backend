@@ -40,6 +40,8 @@ export async function createPlace(data: Prisma.PlacesCreateManyInput & Prisma.Ne
             is_oneday_trip: data.is_oneday_trip,
             stay_option: data.stay_option,
             best_time_to_visit: data.best_time_to_visit,
+            description: data.description,
+            image_link: data.image_link,
             nearest_place_ref: {
                 create: {
                     nearest_place: data.nearest_place,
