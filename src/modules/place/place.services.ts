@@ -24,7 +24,17 @@ export async function getPlaceById(id: number) {
             id
         },
         include: {
-            spots: true
+            spots: true,
+            state: {
+                select: {
+                    state: true
+                }
+            },
+            nearest_place_ref: {
+                select: {
+                    nearest_place: true
+                }
+            }
         }
     })
 }
@@ -64,6 +74,8 @@ export async function updatePlace(data: Prisma.PlacesCreateManyInput & Prisma.Ne
             is_oneday_trip: data.is_oneday_trip,
             stay_option: data.stay_option,
             best_time_to_visit: data.best_time_to_visit,
+            description: data.description,
+            image_link: data.image_link,
             nearest_place_ref: {
                 upsert: {
                     where: {
