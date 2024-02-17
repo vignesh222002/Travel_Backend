@@ -15,6 +15,7 @@ const swaggerConfig = {
             { name: 'State', description: 'State APIs' },
             { name: 'Place', description: 'Place APIs' },
             { name: 'Spot', description: 'Spot APIs' },
+            { name: 'Trip', description: 'Trip APIs' },
         ],
     }
 }

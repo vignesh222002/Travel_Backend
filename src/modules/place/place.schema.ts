@@ -12,6 +12,7 @@ export const getPlaceByIdSchema = {
 export const createPlaceSchema = {
     tags: ['Place'],
     body: {
+        type: 'object',
         properties: {
             place: { type: 'string' },
             state_id: { type: 'number' },
@@ -31,6 +32,7 @@ export const createPlaceSchema = {
 export const updatePlaceSchema = {
     tags: ['Place'],
     body: {
+        type: 'object',
         properties: {
             id: { type: 'number' },
             place: { type: 'string' },

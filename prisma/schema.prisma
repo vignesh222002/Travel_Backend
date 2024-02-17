@@ -30,10 +30,11 @@ model Places {
   spots              Spots[]
   nearest_place_ref  Nearest_place? @relation("place_id")
   state              States         @relation(fields: [state_id], references: [id])
+  Trip_days_ref      Trip_days[]
 }
 
 model Spots {
-  id              Int     @id @default(autoincrement())
+  id              Int         @id @default(autoincrement())
   spot            String
   place_id        Int
   category        String
@@ -42,8 +43,9 @@ model Spots {
   season          String
   image_link      String?
   google_location String?
-  must_visit      Boolean @default(false)
-  place_ref       Places  @relation(fields: [place_id], references: [id], onDelete: Cascade)
+  must_visit      Boolean     @default(false)
+  place_ref       Places      @relation(fields: [place_id], references: [id], onDelete: Cascade)
+  Trip_days_ref   Trip_days[]
 }
 
 model Nearest_place {
@@ -51,4 +53,23 @@ model Nearest_place {
   place_id      Int    @unique
   nearest_place String
   place_id_ref  Places @relation(fields: [place_id], references: [id], name: "place_id", onDelete: Cascade)
+}
+
+model Trips {
+  id            Int         @id @default(autoincrement())
+  description   String      @default("Default description for Trips")
+  Trip_days_ref Trip_days[]
+}
+
+model Trip_days {
+  id          Int    @id @default(autoincrement())
+  trip_id     Int
+  date        String
+  place_id    Int
+  spot_id     Int
+  order       Int
+  description String
+  Trips_ref   Trips  @relation(fields: [trip_id], references: [id], onDelete: Cascade)
+  spots_ref   Spots  @relation(fields: [spot_id], references: [id], onDelete: Cascade)
+  place_ref   Places @relation(fields: [place_id], references: [id])
 }

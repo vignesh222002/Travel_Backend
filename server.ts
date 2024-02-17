@@ -7,6 +7,7 @@ import fastifySwagger from "@fastify/swagger";
 import swaggerConfig from "./src/utils/swagger.config";
 import fastifySwaggerUi from "@fastify/swagger-ui";
 import spotRoutes from "./src/modules/spot/spot.routers";
+import tripRoutes from "./src/modules/trip/trip.routes";
 
 config();
 
@@ -31,6 +32,7 @@ server.register(fastifySwaggerUi)
 server.register(stateRoutes, { prefix: 'api/state' })
 server.register(placeRoutes, { prefix: 'api/place' })
 server.register(spotRoutes, { prefix: 'api/spot' })
+server.register(tripRoutes, {prefix: '/api/trip'})
 
 try {
     server.listen({ port: +(process.env.PORT || 4000) }, (error, address) => {

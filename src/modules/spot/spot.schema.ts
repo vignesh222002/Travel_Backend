@@ -1,6 +1,7 @@
 export const addSpotSchema = {
     tags: ['Spot'],
     body: {
+        type: 'object',
         properties: {
             place_id: { type: 'number' },
             spot: { type: 'string' },
@@ -19,6 +20,7 @@ export const addSpotSchema = {
 export const updateSpotSchema = {
     tags: ['Spot'],
     body: {
+        type: 'object',
         properties: {
             id: { type: 'number' },
             place_id: { type: 'number' },
