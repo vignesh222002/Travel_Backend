@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createTrip, getAllTrips } from "./trip.services";
+import { createTrip, getAllTrips, getTripById } from "./trip.services";
 
 export const createTripHandler = async (
     request: FastifyRequest<{
@@ -43,6 +43,31 @@ export const getAllTripsHandler = async (
     }
     catch (error) {
         console.log("Get All Trip Error", error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
+    }
+}
+
+export const getTripByIdHandler = async (
+    request: FastifyRequest<{
+        Params: {
+            id: number
+        }
+    }>,
+    reply: FastifyReply
+) => {
+    try {
+        const result = await getTripById(request.params.id)
+        return reply.code(200)
+            .send({
+                status: true,
+                data: result
+            })
+    }
+    catch (error) {
+        console.log("Get Trip By Id Error", error);
         reply.code(500).send({
             status: false,
             error

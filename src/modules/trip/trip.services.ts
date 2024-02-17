@@ -40,3 +40,19 @@ export async function getAllTrips() {
 
     return getAllTripsResponseFormatter(result)
 }
+
+export async function getTripById(id: number) {
+    return await prisma.trips.findUnique({
+        where: {
+            id
+        },
+        include: {
+            Trip_days_ref: {
+                include: {
+                    place_ref: true,
+                    spots_ref: true
+                }
+            }
+        }
+    })
+}

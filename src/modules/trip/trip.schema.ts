@@ -25,3 +25,14 @@ export const createTripSchema = {
 export const getAllTripsSchema = {
     tags: ['Trip'],
 }
+
+export const getTripByIdSchema = {
+    tags: ['Trip'],
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'number' }
+        },
+        required: ['id']
+    }
+}
