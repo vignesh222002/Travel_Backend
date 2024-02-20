@@ -24,6 +24,7 @@ export interface getTripByIdResponse {
         place_ref: {
             id: number;
             place: string;
+            count: number;
         };
         spots_ref: {
             id: number;
@@ -34,4 +35,16 @@ export interface getTripByIdResponse {
             must_visit: boolean;
         };
     }[];
+}
+
+export interface getTripByIdResponseFormatter {
+    id: number,
+    description: string,
+    trip_data: any,
+    places_visited: places_visited[]
+}
+
+export interface places_visited {
+    place_id: number,
+    count: number
 }

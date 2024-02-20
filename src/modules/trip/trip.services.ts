@@ -1,33 +1,47 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../utils/prismaClient";
 import { getAllTripsResponseFormatter, getTripsByIdResponseFormatter } from "./trip.helper";
+import { places_visited } from "./trip.interfaces";
 
 export async function createTrip(
+    trip_name: string,
+    members: string,
+    amout_spend: number,
     description: string,
     places_visited: number[],
     data: Prisma.TripsCreateManyInput & Prisma.Trip_daysCreateManyInput) {
 
-    await prisma.places.updateMany({
-        where: {
-            id: {
-                in: places_visited
-            }
-        },
-        data: {
-            is_visited: true
-        }
-    })
-
-    return await prisma.trips.create({
-        data: {
-            description: description,
-            Trip_days_ref: {
-                createMany: {
-                    data: data
+    const result = await prisma.$transaction([
+        prisma.places.updateMany({
+            where: {
+                id: {
+                    in: places_visited
+                }
+            },
+            data: {
+                is_visited: true,
+                count: {
+                    increment: 1
                 }
             }
-        }
-    })
+        }),
+
+        prisma.trips.create({
+            data: {
+                trip_name,
+                amout_spend,
+                members,
+                description,
+                Trip_days_ref: {
+                    createMany: {
+                        data
+                    }
+                }
+            }
+        })
+    ])
+
+    return result
 }
 
 export async function getAllTrips() {
@@ -72,6 +86,7 @@ export async function getTripById(id: number) {
                         select: {
                             id: true,
                             place: true,
+                            count: true,
                         }
                     },
                     spots_ref: {
@@ -95,8 +110,31 @@ export async function getTripById(id: number) {
     return getTripsByIdResponseFormatter(result)
 }
 
+export async function deleteTrip(id: number, places_visited: places_visited[]) {
+
+    return await prisma.$transaction([
+        ...places_visited.map(item => prisma.places.update({
+            where: {
+                id: item.place_id
+            },
+            data: {
+                count: item.count <= 0 ? 0 : item.count - 1,
+                is_visited: item.count - 1 ? true : false
+            }
+        })),
+
+        prisma.trips.delete({
+            where: {
+                id
+            }
+        })
+    ])
+}
 
 // {
+//     "trip_name": "Trip Name",
+//     "members": "Me,Deepak,Testing",
+//     "amout_spend": 2000,
 //     "description": "Testing Create Trip",
 //     "places_visited": [
 //       6, 7
@@ -136,6 +174,6 @@ export async function getTripById(id: number) {
 //         "place_id": 14,
 //         "order": 5,
 //         "description": "Then Go to Kolli in the Second Day"
-//       },
+//       }
 //     ]
-//   }
+// }

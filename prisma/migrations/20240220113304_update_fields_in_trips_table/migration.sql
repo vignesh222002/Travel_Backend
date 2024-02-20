@@ -1,0 +1,7 @@
+-- AlterTable
+ALTER TABLE `Places` ADD COLUMN `count` INTEGER NOT NULL DEFAULT 0;
+
+-- AlterTable
+ALTER TABLE `Trips` ADD COLUMN `amout_spend` INTEGER NOT NULL DEFAULT 0,
+    ADD COLUMN `members` VARCHAR(191) NOT NULL DEFAULT 'Me',
+    ADD COLUMN `trip_name` VARCHAR(191) NOT NULL DEFAULT 'Trip Name';

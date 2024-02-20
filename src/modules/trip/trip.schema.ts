@@ -3,6 +3,9 @@ export const createTripSchema = {
     body: {
         type: 'object',
         properties: {
+            trip_name: { type: 'string' },
+            members: { type: 'string' },
+            amout_spend: { type: 'number' },
             description: { type: 'string' },
             places_visited: {
                 type: 'array',
@@ -23,7 +26,7 @@ export const createTripSchema = {
                 }
             },
         },
-        required: ['description', 'places_visited', 'data']
+        required: ['trip_name', 'members', 'amout_spend', 'description', 'places_visited', 'data']
     }
 }
 
@@ -39,5 +42,33 @@ export const getTripByIdSchema = {
             id: { type: 'number' }
         },
         required: ['id']
+    }
+}
+
+export const deleteTripSchema = {
+    tags: ['Trip'],
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'number' }
+        },
+        required: ['id']
+    },
+    body: {
+        type: 'object',
+        properties: {
+            places_visited: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        place_id: { type: 'number' },
+                        count: { type: 'number' }
+                    },
+                    required: ['place_id', 'count']
+                }
+            }
+        },
+        required: ['places_visited']
     }
 }
