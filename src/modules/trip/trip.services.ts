@@ -11,7 +11,7 @@ export async function createTrip(
     places_visited: number[],
     data: Prisma.TripsCreateManyInput & Prisma.Trip_daysCreateManyInput) {
 
-    const result = await prisma.$transaction([
+    return await prisma.$transaction([
         prisma.places.updateMany({
             where: {
                 id: {
@@ -40,8 +40,6 @@ export async function createTrip(
             }
         })
     ])
-
-    return result
 }
 
 export async function getAllTrips() {
