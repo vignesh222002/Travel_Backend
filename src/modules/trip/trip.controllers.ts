@@ -5,13 +5,15 @@ import { createTrip, getAllTrips, getTripById } from "./trip.services";
 export const createTripHandler = async (
     request: FastifyRequest<{
         Body: {
+            description: string,
+            places_visited: number[],
             data: Prisma.TripsCreateManyInput & Prisma.Trip_daysCreateManyInput
         }
     }>,
     reply: FastifyReply
 ) => {
     try {
-        const result = await createTrip(request.body.data)
+        const result = await createTrip(request.body.description, request.body.places_visited, request.body.data)
 
         return reply.code(200)
             .send({

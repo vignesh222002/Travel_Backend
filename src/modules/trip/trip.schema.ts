@@ -3,6 +3,11 @@ export const createTripSchema = {
     body: {
         type: 'object',
         properties: {
+            description: { type: 'string' },
+            places_visited: {
+                type: 'array',
+                items: { type: 'number' }
+            },
             data: {
                 type: 'array',
                 items: {
@@ -16,9 +21,9 @@ export const createTripSchema = {
                     },
                     required: ['date', 'spot_id', 'place_id', 'order', 'description']
                 }
-            }
+            },
         },
-        required: ['data']
+        required: ['description', 'places_visited', 'data']
     }
 }
 

@@ -1,4 +1,4 @@
-import { getAllTripsResponse } from "./trip.interfaces";
+import { getAllTripsResponse, getTripByIdResponse } from "./trip.interfaces";
 
 export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) => {
     let result: any = []
@@ -31,4 +31,33 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
     })
 
     return result;
+}
+
+
+export const getTripsByIdResponseFormatter = async (data: getTripByIdResponse) => {
+    let result: any = {
+        id: data.id,
+        description: data.description,
+        trip_data: {}
+    }
+
+    data.Trip_days_ref.map(item => {
+        if (!result.trip_data[item.date]) {
+            result.trip_data[item.date] = {}
+        }
+
+        if (!result.trip_data[item.date][item.place_ref.place]) {
+            result.trip_data[item.date][item.place_ref.place] = []
+        }
+
+        result.trip_data[item.date][item.place_ref.place].push({
+            date: item.date,
+            order: item.order,
+            description: item.description,
+            place: item.place_ref.place,
+            spot: item.spots_ref
+        })
+
+    })
+    return result
 }
