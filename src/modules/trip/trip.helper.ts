@@ -85,8 +85,6 @@ export const compare_places = (oldArray: places_visited[], newArray: places_visi
         }
     })
 
-    console.log("compare_places", deleted, added)
-
     return {
         deleted,
         added
