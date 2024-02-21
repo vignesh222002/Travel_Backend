@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
-import { createTripSchema, deleteTripSchema, getAllTripsSchema, getTripByIdSchema } from "./trip.schema";
-import { createTripHandler, deleteTripHandler, getAllTripsHandler, getTripByIdHandler } from "./trip.controllers";
+import { createTripSchema, deleteTripSchema, editTripSchema, getAllTripsSchema, getTripByIdSchema } from "./trip.schema";
+import { createTripHandler, deleteTripHandler, editTripHandler, getAllTripsHandler, getTripByIdHandler } from "./trip.controllers";
 
 async function tripRoutes(server: FastifyInstance) {
     server.get(
@@ -21,11 +21,11 @@ async function tripRoutes(server: FastifyInstance) {
         createTripHandler
     )
 
-    // server.put(
-    //     '/update/:id',
-    //     {},
-    //     () => { }
-    // )
+    server.put(
+        '/update/:id',
+        { schema: editTripSchema },
+        editTripHandler
+    )
 
     server.delete(
         '/delete/:id',

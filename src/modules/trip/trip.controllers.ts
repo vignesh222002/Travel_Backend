@@ -1,7 +1,8 @@
 import { Prisma } from "@prisma/client";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { createTrip, deleteTrip, getAllTrips, getTripById } from "./trip.services";
+import { createTrip, deleteTrip, editTrip, getAllTrips, getTripById } from "./trip.services";
 import { places_visited } from "./trip.interfaces";
+import { compare_places } from "./trip.helper";
 
 export const createTripHandler = async (
     request: FastifyRequest<{
@@ -34,6 +35,49 @@ export const createTripHandler = async (
     }
     catch (error) {
         console.log("Create Trip Error", error);
+        reply.code(500).send({
+            status: false,
+            error
+        });
+    }
+}
+
+export const editTripHandler = async (
+    request: FastifyRequest<{
+        Body: {
+            id: number,
+            trip_name: string,
+            members: string,
+            amout_spend: number,
+            description: string,
+            new_places_visited: places_visited[],
+            old_places_visited: places_visited[],
+            data: Prisma.Trip_daysCreateManyInput[]
+        }
+    }>,
+    reply: FastifyReply
+) => {
+    try {
+        const places_visited = compare_places(request.body.old_places_visited, request.body.new_places_visited)
+
+        const result = await editTrip(
+            request.body.id,
+            request.body.trip_name,
+            request.body.members,
+            request.body.amout_spend,
+            request.body.description,
+            places_visited,
+            request.body.data,
+        )
+
+        return reply.code(200)
+            .send({
+                status: true,
+                data: result
+            })
+    }
+    catch (error) {
+        console.log("Edit Trip Error", error);
         reply.code(500).send({
             status: false,
             error

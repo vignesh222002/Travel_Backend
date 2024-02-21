@@ -30,6 +30,65 @@ export const createTripSchema = {
     }
 }
 
+export const editTripSchema = {
+    tags: ['Trip'],
+    params: {
+        type: 'object',
+        properties: {
+            id: { type: 'number' }
+        },
+        required: ['id']
+    },
+    body: {
+        type: 'object',
+        properties: {
+            id: { type: 'number' },
+            trip_name: { type: 'string' },
+            members: { type: 'string' },
+            amout_spend: { type: 'number' },
+            description: { type: 'string' },
+            new_places_visited: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        place_id: { type: 'number' },
+                        count: { type: 'number' }
+                    },
+                    required: ['place_id', 'count']
+                }
+            },
+            old_places_visited: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        place_id: { type: 'number' },
+                        count: { type: 'number' }
+                    },
+                    required: ['place_id', 'count']
+                }
+            },
+            data: {
+                type: 'array',
+                items: {
+                    type: 'object',
+                    properties: {
+                        id: { type: 'number' },
+                        date: { type: 'string' },
+                        spot_id: { type: 'number' },
+                        place_id: { type: 'number' },
+                        order: { type: 'number' },
+                        description: { type: 'string' }
+                    },
+                    required: ['id', 'date', 'spot_id', 'place_id', 'order', 'description']
+                }
+            },
+        },
+        required: ['id', 'trip_name', 'members', 'amout_spend', 'description', 'new_places_visited', 'old_places_visited', 'data']
+    }
+}
+
 export const getAllTripsSchema = {
     tags: ['Trip'],
 }

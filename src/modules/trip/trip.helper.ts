@@ -1,4 +1,4 @@
-import { getAllTripsResponse, getTripByIdResponse, getTripByIdResponseFormatter } from "./trip.interfaces";
+import { getAllTripsResponse, getTripByIdResponse, getTripByIdResponseFormatter, places_visited } from "./trip.interfaces";
 
 export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) => {
     let result: any = []
@@ -66,4 +66,29 @@ export const getTripsByIdResponseFormatter = async (data: getTripByIdResponse) =
 
     })
     return result
+}
+
+
+export const compare_places = (oldArray: places_visited[], newArray: places_visited[]) => {
+    let deleted: places_visited[] = [];
+    let added: places_visited[] = [];
+
+    oldArray.map(item => {
+        if (!newArray.find(data => item.place_id == data.place_id)) {
+            deleted.push(item)
+        }
+    })
+
+    newArray.map(item => {
+        if (!oldArray.find(data => item.place_id == data.place_id)) {
+            added.push(item)
+        }
+    })
+
+    console.log("compare_places", deleted, added)
+
+    return {
+        deleted,
+        added
+    }
 }
