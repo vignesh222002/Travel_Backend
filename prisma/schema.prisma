@@ -61,7 +61,7 @@ model Trips {
   trip_name     String
   description   String
   members       String
-  amout_spend   Int         @default(0)
+  amount_spend   Int         @default(0)
   Trip_days_ref Trip_days[]
 }
 

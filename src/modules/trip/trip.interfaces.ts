@@ -1,6 +1,9 @@
 export interface getAllTripsResponse {
     id: number;
     description: string;
+    amount_spend: number;
+    members: string;
+    trip_name: string;
     Trip_days_ref: {
         date: string;
         id: number;
@@ -16,6 +19,9 @@ export interface getAllTripsResponse {
 export interface getTripByIdResponse {
     id: number;
     description: string;
+    amount_spend: number;
+    members: string;
+    trip_name: string;
     Trip_days_ref: {
         id: number;
         date: string;
@@ -38,10 +44,34 @@ export interface getTripByIdResponse {
 }
 
 export interface getTripByIdResponseFormatter {
-    id: number,
-    description: string,
-    trip_data: any,
-    places_visited: places_visited[]
+    id: number;
+    description: string;
+    amount_spend: number;
+    members: string;
+    trip_name: string;
+    places_visited: {
+        place: string;
+        place_id: number;
+        count: number;
+    }[];
+    trip_data: {
+        [key: string]: {
+            [key: string]: {
+                date: string;
+                order: number;
+                description: string;
+                place: string;
+                spot: {
+                    id: number;
+                    spot: string;
+                    category: string;
+                    image_link: string;
+                    google_location: string;
+                    must_visit: boolean;
+                };
+            }[];
+        }
+    }
 }
 
 export interface places_visited {

@@ -24,6 +24,9 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
         result.push({
             id: item.id,
             description: item.description,
+            amount_spend: item.amount_spend,
+            members: item.members,
+            trip_name: item.trip_name,
             dates,
             places,
             place_image_link: item.Trip_days_ref[0].place_ref.image_link
@@ -38,6 +41,9 @@ export const getTripsByIdResponseFormatter = async (data: getTripByIdResponse) =
     let result: getTripByIdResponseFormatter = {
         id: data.id,
         description: data.description,
+        amount_spend: data.amount_spend,
+        members: data.members,
+        trip_name: data.trip_name,
         places_visited: [],
         trip_data: {},
     }
@@ -45,7 +51,7 @@ export const getTripsByIdResponseFormatter = async (data: getTripByIdResponse) =
     data.Trip_days_ref.map(item => {
         // Add Place details covered in that Paricular Trip
         if (!result.places_visited.find(data => data.place_id == item.place_ref.id)) {
-            result.places_visited.push({ place_id: item.place_ref.id, count: item.place_ref.count })
+            result.places_visited.push({ place_id: item.place_ref.id, count: item.place_ref.count, place: item.place_ref.place })
         }
 
         if (!result.trip_data[item.date]) {

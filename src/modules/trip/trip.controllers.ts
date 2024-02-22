@@ -9,7 +9,7 @@ export const createTripHandler = async (
         Body: {
             trip_name: string,
             members: string,
-            amout_spend: number,
+            amount_spend: number,
             description: string,
             places_visited: number[],
             data: Prisma.TripsCreateManyInput & Prisma.Trip_daysCreateManyInput
@@ -21,7 +21,7 @@ export const createTripHandler = async (
         const result = await createTrip(
             request.body.trip_name,
             request.body.members,
-            request.body.amout_spend,
+            request.body.amount_spend,
             request.body.description,
             request.body.places_visited,
             request.body.data
@@ -48,7 +48,7 @@ export const editTripHandler = async (
             id: number,
             trip_name: string,
             members: string,
-            amout_spend: number,
+            amount_spend: number,
             description: string,
             new_places_visited: places_visited[],
             old_places_visited: places_visited[],
@@ -64,7 +64,7 @@ export const editTripHandler = async (
             request.body.id,
             request.body.trip_name,
             request.body.members,
-            request.body.amout_spend,
+            request.body.amount_spend,
             request.body.description,
             places_visited,
             request.body.data,

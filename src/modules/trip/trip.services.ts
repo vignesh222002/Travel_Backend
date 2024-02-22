@@ -6,7 +6,7 @@ import { places_visited } from "./trip.interfaces";
 export async function createTrip(
     trip_name: string,
     members: string,
-    amout_spend: number,
+    amount_spend: number,
     description: string,
     places_visited: number[],
     data: Prisma.TripsCreateManyInput & Prisma.Trip_daysCreateManyInput
@@ -30,7 +30,7 @@ export async function createTrip(
         prisma.trips.create({
             data: {
                 trip_name,
-                amout_spend,
+                amount_spend,
                 members,
                 description,
                 Trip_days_ref: {
@@ -47,7 +47,7 @@ export async function editTrip(
     id: number,
     trip_name: string,
     members: string,
-    amout_spend: number,
+    amount_spend: number,
     description: string,
     places_visited: {
         deleted: places_visited[];
@@ -83,7 +83,7 @@ export async function editTrip(
             data: {
                 trip_name,
                 members,
-                amout_spend,
+                amount_spend,
                 description,
                 Trip_days_ref: {
                     updateMany: data?.map((item: Prisma.Trip_daysCreateManyInput) => ({
@@ -188,7 +188,7 @@ export async function deleteTrip(id: number, places_visited: places_visited[]) {
 // {
 //     "trip_name": "Trip Name",
 //     "members": "Me,Deepak,Testing",
-//     "amout_spend": 2000,
+//     "amount_spend": 2000,
 //     "description": "Testing Create Trip",
 //     "places_visited": [
 //       6, 7
@@ -236,7 +236,7 @@ export async function deleteTrip(id: number, places_visited: places_visited[]) {
 //     "id": 6,
 //     "trip_name": "Trip Name",
 //     "members": "Testing",
-//     "amout_spend": 9000,
+//     "amount_spend": 9000,
 //     "description": "Testing Description",
 //     "new_places_visited": [
 //       {

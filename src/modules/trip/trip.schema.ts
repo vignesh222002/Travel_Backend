@@ -5,7 +5,7 @@ export const createTripSchema = {
         properties: {
             trip_name: { type: 'string' },
             members: { type: 'string' },
-            amout_spend: { type: 'number' },
+            amount_spend: { type: 'number' },
             description: { type: 'string' },
             places_visited: {
                 type: 'array',
@@ -26,7 +26,7 @@ export const createTripSchema = {
                 }
             },
         },
-        required: ['trip_name', 'members', 'amout_spend', 'description', 'places_visited', 'data']
+        required: ['trip_name', 'members', 'amount_spend', 'description', 'places_visited', 'data']
     }
 }
 
@@ -45,7 +45,7 @@ export const editTripSchema = {
             id: { type: 'number' },
             trip_name: { type: 'string' },
             members: { type: 'string' },
-            amout_spend: { type: 'number' },
+            amount_spend: { type: 'number' },
             description: { type: 'string' },
             new_places_visited: {
                 type: 'array',
@@ -85,7 +85,7 @@ export const editTripSchema = {
                 }
             },
         },
-        required: ['id', 'trip_name', 'members', 'amout_spend', 'description', 'new_places_visited', 'old_places_visited', 'data']
+        required: ['id', 'trip_name', 'members', 'amount_spend', 'description', 'new_places_visited', 'old_places_visited', 'data']
     }
 }
 
