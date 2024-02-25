@@ -1,6 +1,31 @@
 import { Prisma } from "@prisma/client";
 import { FastifyReply, FastifyRequest } from "fastify";
-import { addSpot, deleteSpot, updateSpot } from "./spot.services";
+import { addSpot, deleteSpot, getAllSpotsByPlace, updateSpot } from "./spot.services";
+
+export async function getAllSpotsByPlaceHandler(
+    request: FastifyRequest<{
+        Params: { place_id: number }
+    }>,
+    reply: FastifyReply
+) {
+    try {
+        const place_id = request.params.place_id
+
+        const result = await getAllSpotsByPlace(place_id)
+
+        reply.code(200).send({
+            status: true,
+            data: result
+        })
+    }
+    catch (error) {
+        console.log("Add Spot Error", error)
+        reply.code(500).send({
+            status: false,
+            error
+        });
+    }
+}
 
 export async function addSpotHandler(
     request: FastifyRequest<{

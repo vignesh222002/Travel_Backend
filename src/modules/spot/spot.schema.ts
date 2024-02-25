@@ -1,3 +1,14 @@
+export const getAllSpotsByPlaceSchema = {
+    tags: ['Spot'],
+    params: {
+        type: 'object',
+        properties: {
+            place_id: { type: 'number' }
+        },
+        required: ['place_id']
+    }
+}
+
 export const addSpotSchema = {
     tags: ['Spot'],
     body: {

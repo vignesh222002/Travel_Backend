@@ -1,6 +1,14 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../utils/prismaClient";
 
+export async function getAllSpotsByPlace(place_id: number) {
+    return await prisma.spots.findMany({
+        where: {
+            place_id
+        },
+    })
+}
+
 export async function addSpot(data: Prisma.SpotsCreateManyInput) {
     return await prisma.spots.create({ data })
 }
