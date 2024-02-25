@@ -4,7 +4,7 @@ import { addSpotHandler, deleteSpotHandler, getAllSpotsByPlaceHandler, updateSpo
 
 async function spotRoutes(server: FastifyInstance) {
     server.get(
-        '/spot/all/:place_id',
+        '/all/:place_id',
         { schema: getAllSpotsByPlaceSchema },
         getAllSpotsByPlaceHandler
     )
