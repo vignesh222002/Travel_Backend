@@ -43,7 +43,18 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
         total_days_spent: 0,
         total_oneday_trips: 0,
         total_multiday_trips: 0,
-        trip_data: [],
+        trip_data: [
+            {
+                amount_spend: 0,
+                dates: [],
+                description: '',
+                id: 0,
+                members: '',
+                place_image_link: '',
+                places: [],
+                trip_name: ''
+            }
+        ],
     }
 
     // Trip Data
