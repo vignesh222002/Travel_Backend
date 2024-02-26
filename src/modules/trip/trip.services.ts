@@ -1,6 +1,6 @@
 import { Prisma } from "@prisma/client";
 import prisma from "../../utils/prismaClient";
-import { getAllTripsResponseFormatter, getTripsByIdResponseFormatter } from "./trip.helper";
+import { getAllTripsResponseFormatter, getTripByIdRawData, getTripsByIdResponseFormatter } from "./trip.helper";
 import { places_visited } from "./trip.interfaces";
 
 export async function createTrip(
@@ -50,8 +50,8 @@ export async function editTrip(
     amount_spend: number,
     description: string,
     places_visited: {
-        deleted: places_visited[];
         added: places_visited[];
+        deleted: places_visited[];
     },
     data: Prisma.Trip_daysCreateManyInput[]
 ) {
@@ -124,7 +124,7 @@ export async function getAllTrips() {
     return getAllTripsResponseFormatter(result)
 }
 
-export async function getTripById(id: number) {
+export async function getTripById(id: number, raw_data?: boolean) {
     const result: any = await prisma.trips.findUnique({
         where: {
             id
@@ -160,6 +160,10 @@ export async function getTripById(id: number) {
             }
         }
     })
+
+    if (raw_data) {
+        return getTripByIdRawData(result)
+    }
 
     return getTripsByIdResponseFormatter(result)
 }

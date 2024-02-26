@@ -111,12 +111,15 @@ export const getTripByIdHandler = async (
     request: FastifyRequest<{
         Params: {
             id: number
+        },
+        Querystring: {
+            raw_data?: boolean
         }
     }>,
     reply: FastifyReply
 ) => {
     try {
-        const result = await getTripById(request.params.id)
+        const result = await getTripById(request.params.id, request.query.raw_data)
         return reply.code(200)
             .send({
                 status: true,

@@ -1,4 +1,4 @@
-import { AllTripApiData, getAllTripsResponse, getTripByIdResponse, getTripByIdResponseFormatter, places_visited } from "./trip.interfaces";
+import { AllTripApiData, getAllTripsResponse, getTripByIdResponse, getTripByIdResponseFormatter, getTripByIdResponseRawData, places_visited } from "./trip.interfaces";
 
 const data = [
     {
@@ -142,13 +142,44 @@ export const getTripsByIdResponseFormatter = async (data: getTripByIdResponse) =
         })
 
     })
+
+    return result
+}
+
+export const getTripByIdRawData = async (data: getTripByIdResponse) => {
+    let result: getTripByIdResponseRawData = {
+        id: data.id,
+        description: data.description,
+        amount_spend: data.amount_spend,
+        members: data.members,
+        trip_name: data.trip_name,
+        old_places: [],
+        data: [],
+    }
+
+    data.Trip_days_ref.map(item => {
+        // Add Place details covered in that Paricular Trip
+        if (!result.old_places.find(data => data.place_id == item.place_ref.id)) {
+            result.old_places.push({ place_id: item.place_ref.id, count: item.place_ref.count })
+        }
+
+        result.data.push({
+            id: item.id,
+            date: item.date,
+            description: item.description,
+            order: item.order,
+            place_id: item.place_ref.id,
+            spot_id: item.spots_ref.id
+        })
+    })
+
     return result
 }
 
 
 export const compare_places = (oldArray: places_visited[], newArray: places_visited[]) => {
-    let deleted: places_visited[] = [];
     let added: places_visited[] = [];
+    let deleted: places_visited[] = [];
 
     oldArray.map(item => {
         if (!newArray.find(data => item.place_id == data.place_id)) {

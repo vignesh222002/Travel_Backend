@@ -43,6 +43,23 @@ export interface getTripByIdResponse {
     }[];
 }
 
+export interface getTripByIdResponseRawData {
+    id: number;
+    description: string;
+    amount_spend: number;
+    members: string;
+    trip_name: string;
+    old_places: places_visited[];
+    data: {
+        id: number,
+        date: string,
+        order: number,
+        description: string,
+        place_id: number,
+        spot_id: number,
+    }[]
+}
+
 export interface getTripByIdResponseFormatter {
     id: number;
     description: string;

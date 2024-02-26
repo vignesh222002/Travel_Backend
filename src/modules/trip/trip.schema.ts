@@ -101,6 +101,13 @@ export const getTripByIdSchema = {
             id: { type: 'number' }
         },
         required: ['id']
+    },
+    querystring: {
+        type: 'object',
+        properties: {
+            raw_data: { type: 'boolean' }
+        },
+        required: []
     }
 }
 
