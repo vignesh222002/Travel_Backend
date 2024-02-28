@@ -8,11 +8,7 @@ export interface getAllTripsResponse {
         date: string;
         id: number;
         order: number;
-        place_ref: {
-            id: number;
-            place: string;
-            image_link: string;
-        };
+        place_ref: Place_ref;
     }[]
 }
 
@@ -27,19 +23,8 @@ export interface getTripByIdResponse {
         date: string;
         order: number;
         description: string;
-        place_ref: {
-            id: number;
-            place: string;
-            count: number;
-        };
-        spots_ref: {
-            id: number;
-            spot: string;
-            category: string;
-            image_link: string;
-            google_location: string;
-            must_visit: boolean;
-        };
+        place_ref: Place_ref;
+        spots_ref: Spots_ref;
     }[];
 }
 
@@ -96,6 +81,22 @@ export interface places_visited {
     count: number
 }
 
+export interface Place_ref {
+    id: number;
+    place: string;
+    count: number;
+    image_link: string;
+}
+
+export interface Spots_ref {
+    id: number;
+    spot: string;
+    category: string;
+    image_link: string;
+    google_location: string;
+    must_visit: boolean;
+}
+
 export interface AllTripApiData {
     trip_data: AllTripData[];
     total_trips: number;
@@ -115,5 +116,6 @@ export interface AllTripData {
     trip_name: string;
     dates: string[],
     places: string[],
-    place_image_link: string
+    place_image_link: string;
+    places_visited: places_visited[]
 }

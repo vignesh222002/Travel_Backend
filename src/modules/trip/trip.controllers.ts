@@ -52,6 +52,7 @@ export const editTripHandler = async (
             description: string,
             new_places_visited: places_visited[],
             old_places_visited: places_visited[],
+            delete_trip_spots: number[],
             data: Prisma.Trip_daysCreateManyInput[]
         }
     }>,
@@ -67,6 +68,7 @@ export const editTripHandler = async (
             request.body.amount_spend,
             request.body.description,
             places_visited,
+            request.body.delete_trip_spots,
             request.body.data,
         )
 

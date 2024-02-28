@@ -75,5 +75,5 @@ model Trip_days {
   description String
   Trips_ref   Trips  @relation(fields: [trip_id], references: [id], onDelete: Cascade)
   spots_ref   Spots  @relation(fields: [spot_id], references: [id], onDelete: Cascade)
-  place_ref   Places @relation(fields: [place_id], references: [id])
+  place_ref   Places @relation(fields: [place_id], references: [id], onDelete: Cascade)
 }

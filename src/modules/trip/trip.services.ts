@@ -53,8 +53,20 @@ export async function editTrip(
         added: places_visited[];
         deleted: places_visited[];
     },
+    delete_trip_spots: number[],
     data: Prisma.Trip_daysCreateManyInput[]
 ) {
+
+    const newTripSpots = data.filter((item: Prisma.Trip_daysCreateManyInput) => item.id === 0)
+    newTripSpots.map((item: Prisma.Trip_daysCreateManyInput) => ({
+        date: item.date,
+        place_id: item.place_id,
+        spot_id: item.spot_id,
+        order: item.order,
+        description: item.description
+    }))
+    const updateTripSpots = data.filter((item: Prisma.Trip_daysCreateManyInput) => item.id !== 0)
+
     return await prisma.$transaction([
         ...places_visited.added.map(item => prisma.places.update({
             where: {
@@ -86,12 +98,27 @@ export async function editTrip(
                 amount_spend,
                 description,
                 Trip_days_ref: {
-                    updateMany: data?.map((item: Prisma.Trip_daysCreateManyInput) => ({
+                    // Create New Spots
+                    createMany: {
+                        data: newTripSpots?.map((item: Prisma.Trip_daysCreateManyInput) => ({
+                            ...item
+                        }))
+                    },
+
+                    // Update Existing Spots
+                    updateMany: updateTripSpots?.map((item: Prisma.Trip_daysCreateManyInput) => ({
                         where: {
-                            id: item.id
+                            id: item.id,
                         },
                         data: item
-                    }))
+                    })),
+
+                    // Delete Existing Spots
+                    deleteMany: {
+                        id: {
+                            in: delete_trip_spots
+                        }
+                    }
                 }
             }
         })
@@ -110,6 +137,7 @@ export async function getAllTrips() {
                         select: {
                             id: true,
                             place: true,
+                            count: true,
                             image_link: true,
                         },
                     }
@@ -188,112 +216,3 @@ export async function deleteTrip(id: number, places_visited: places_visited[]) {
         })
     ])
 }
-
-// {
-//     "trip_name": "Trip Name",
-//     "members": "Me,Deepak,Testing",
-//     "amount_spend": 2000,
-//     "description": "Testing Create Trip",
-//     "places_visited": [
-//       6, 7
-//     ],
-//     "data": [
-//       {
-//         "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//         "spot_id": 2,
-//         "place_id": 6,
-//         "order": 1,
-//         "description": "First Day Starts in Ooty"
-//       },
-//       {
-//         "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//         "spot_id": 1,
-//         "place_id": 7,
-//         "order": 2,
-//         "description": "Then Go to Kodai in the First Day"
-//       },
-//       {
-//         "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//         "spot_id": 5,
-//         "place_id": 7,
-//         "order": 3,
-//         "description": "First Day End"
-//       },
-//       {
-//         "date": "Tue Feb 20 2024 16:47:41 GMT+0530",
-//         "spot_id": 6,
-//         "place_id": 7,
-//         "order": 4,
-//         "description": "Second Day Start in Kodai"
-//       },
-//       {
-//         "date": "Tue Feb 20 2024 16:47:41 GMT+0530",
-//         "spot_id": 7,
-//         "place_id": 14,
-//         "order": 5,
-//         "description": "Then Go to Kolli in the Second Day"
-//       }
-//     ]
-// }
-
-// {
-//     "id": 6,
-//     "trip_name": "Trip Name",
-//     "members": "Testing",
-//     "amount_spend": 9000,
-//     "description": "Testing Description",
-//     "new_places_visited": [
-//       {
-//         "place_id": 0,
-//         "count": 0
-//       }
-//     ],
-//     "old_places_visited": [
-//       {
-//         "place_id": 0,
-//         "count": 0
-//       }
-//     ],
-//     "data": [
-//         {
-//           "id": 16,
-//           "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//           "spot_id": 2,
-//           "place_id": 6,
-//           "order": 1,
-//           "description": "First Day Starts in Ooty Testing"
-//         },
-//         {
-//           "id": 17,
-//           "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//           "spot_id": 1,
-//           "place_id": 7,
-//           "order": 2,
-//           "description": "Then Go to Kodai in the First Day Testing"
-//         },
-//         {
-//           "id": 18,
-//           "date": "Mon Feb 19 2024 16:47:41 GMT+0530",
-//           "spot_id": 5,
-//           "place_id": 7,
-//           "order": 3,
-//           "description": "First Day End Testing"
-//         },
-//         {
-//           "id": 19,
-//           "date": "Tue Feb 20 2024 16:47:41 GMT+0530",
-//           "spot_id": 6,
-//           "place_id": 7,
-//           "order": 4,
-//           "description": "Second Day Start in Kodai Testing"
-//         },
-//         {
-//           "id": 20,
-//           "date": "Tue Feb 20 2024 16:47:41 GMT+0530",
-//           "spot_id": 7,
-//           "place_id": 14,
-//           "order": 5,
-//           "description": "Then Go to Kolli in the Second Day Testing"
-//         }
-//       ]
-//   }

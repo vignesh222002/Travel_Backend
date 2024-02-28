@@ -69,6 +69,10 @@ export const editTripSchema = {
                     required: ['place_id', 'count']
                 }
             },
+            delete_trip_spots: {
+                type: 'array',
+                items: { type: 'number' }
+            },
             data: {
                 type: 'array',
                 items: {
@@ -85,7 +89,7 @@ export const editTripSchema = {
                 }
             },
         },
-        required: ['id', 'trip_name', 'members', 'amount_spend', 'description', 'new_places_visited', 'old_places_visited', 'data']
+        required: ['id', 'trip_name', 'members', 'amount_spend', 'description', 'new_places_visited', 'old_places_visited', 'delete_trip_spots', 'data']
     }
 }
 

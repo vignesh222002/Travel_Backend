@@ -47,7 +47,7 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
     }
 
     // Trip Data
-    await data?.map(item => {
+    await data?.map((item: getAllTripsResponse) => {
         // Add All Dates
         let dates = item.Trip_days_ref.reduce((dates: string[], item) => {
             const date = item.date;
@@ -62,8 +62,19 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
             return places;
         }, [])
 
+        // Places Visited In theTrip
+        let places_visited_by_trip: places_visited[] = []
+        item.Trip_days_ref.map((item) => {
+            if (!places_visited_by_trip.find(place => place.place_id === item.place_ref.id)) {
+                places_visited_by_trip.push({
+                    place_id: item.place_ref.id,
+                    count: item.place_ref.count,
+                })
+            }
+        })
 
         // Add Place Image Link too and the Logic for return Priority Place Image
+
 
         result.trip_data.push({
             id: item.id,
@@ -73,7 +84,8 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
             trip_name: item.trip_name,
             dates,
             places,
-            place_image_link: item.Trip_days_ref[0].place_ref.image_link
+            place_image_link: item.Trip_days_ref[0].place_ref.image_link,
+            places_visited: places_visited_by_trip,
         })
     })
 
