@@ -1,1 +1,6 @@
 Hello Git
+
+
+Bugs
+
+1. Check What if i will remove all the spots and save edit trip option with the empty trip data.

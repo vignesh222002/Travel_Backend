@@ -76,15 +76,15 @@ export const getAllTripsResponseFormatter = async (data: getAllTripsResponse[]) 
         // Add Place Image Link too and the Logic for return Priority Place Image
 
 
-        result.trip_data.push({
-            id: item.id,
-            description: item.description,
-            amount_spend: item.amount_spend,
-            members: item.members,
-            trip_name: item.trip_name,
+        result?.trip_data?.push({
+            id: item?.id,
+            description: item?.description,
+            amount_spend: item?.amount_spend,
+            members: item?.members,
+            trip_name: item?.trip_name,
             dates,
             places,
-            place_image_link: item.Trip_days_ref[0].place_ref.image_link,
+            place_image_link: item?.Trip_days_ref[0]?.place_ref.image_link,
             places_visited: places_visited_by_trip,
         })
     })
