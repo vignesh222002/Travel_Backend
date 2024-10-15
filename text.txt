@@ -4,3 +4,5 @@ Hello Git
 Bugs
 
 1. Check What if i will remove all the spots and save edit trip option with the empty trip data.
+2. Don't allow the user to create a trip without spots.
+3. In Frontend, while create or edit trip, Don't allow the user to delete the only one spot, or else reset the form there.
